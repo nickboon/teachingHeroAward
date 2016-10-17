@@ -1,0 +1,40 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1">
+	<title>Lightships</title>
+	<link rel="icon" href="../swallow.gif">	
+	<link rel="stylesheet" href="../hdmipiStyle.css">
+
+	<!-- modules -->
+	<script src="../../DiagramApp/points.js"></script>      
+	<script src="../../DiagramApp/perspective.js"></script>
+	<script src="../../DiagramApp/canvas.js"></script>
+	<script src="../../DiagramApp/diagrams.js"></script>	
+	<script src="../../DiagramApp/colours.js"></script>	
+	<script src="../../DiagramApp/drawing.js"></script>	
+	<script src="../../DiagramApp/shapes.js"></script>		
+	<script src="../../DiagramApp/primitives.js"></script>	
+	<script src="../../DiagramApp/solids.js"></script>	
+	<script src="../../DiagramApp/fakeSpheres.js"></script>	
+	<script src="../../DiagramApp/transformation2.js"></script>	
+	<script src="../../DiagramApp/cubeGeometry.js"></script>
+	<script src="../../DiagramApp/cubePoints.js"></script>		
+	<script src="../../DiagramApp/cubeTransformations.js"></script>	
+	<script src="../../DiagramApp/stage.js"></script>
+	<script src="lightship.js"></script>	
+	
+	<!-- app -->
+	<script src="lightshipsApp.js"></script>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	
+	<script>
+		window.onload = function () {
+			var isDisplayVersion = true;
+			window.DIAGRAM_APP.run(isDisplayVersion);			
+		};
+ 	</script>
+</body>
+</html>

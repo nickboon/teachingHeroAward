@@ -1,0 +1,10 @@
+body {
+	background-color: #000;
+	cursor: none;
+	overflow: hidden;
+}
+
+html, body, canvas { 
+	margin:0;
+	padding:0;
+}
