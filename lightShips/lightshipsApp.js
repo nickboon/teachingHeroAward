@@ -7,23 +7,37 @@
 		boatHeight = 20,
 		boatLength =100,
 		areaWidth = 100,
-		halfAreaWidth  = areaWidth / 2;
+		halfAreaWidth  = areaWidth / 2,
+		boatSpacing = boatWidth * 10;
 
+	function getReflectionX(point) {
+		return {x: point.x, y: -point.y, z: point.z};
+	}
+			
+	function getReflectionsX(points) {
+		var reflection = [];
+		
+		points.forEach(function (point) {
+			reflection.push(getReflectionX(point));
+		});
+		
+		return reflection;
+	}		
+					
 	function getRandomNumberBetween(min, max) {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	}	
 	
 	function shiftRotateBoat(points, transformation) {
 		var rotatePointAboutY = transformation.rotatePointAboutY,
-			randomAngle = getRandomNumberBetween(0, transformation.			numberOfRotationalIncrements - 1),
-			randomDistX = (getRandomNumberBetween(0, areaWidth) - halfAreaWidth) * boatLength,
-			randomDistZ = getRandomNumberBetween(0, areaWidth) * boatLength;
+			randomAngle = getRandomNumberBetween(0, transformation.numberOfRotationalIncrements - 1),
+			randomDistX = (getRandomNumberBetween(0, areaWidth) - halfAreaWidth) * boatSpacing,
+			randomDistZ = getRandomNumberBetween(0, areaWidth) * boatSpacing;
 			
 		points.forEach(function (point) {
 			rotatePointAboutY(point, randomAngle);
 			point.x += randomDistX;
-			point.z += randomDistZ;
-			
+			point.z += randomDistZ;			
 		});	
 	}	
 	
@@ -32,9 +46,9 @@
 	}
 			
 	function createLightSphere(spheres, point, alpha) {
-		var center = spheres.create(copyOf(point), 50, '#ffffff', '#ffffff', alpha),
-			middle = spheres.create(copyOf(point), 75, '#ffff00', '#ffff00', alpha / 4),
-			outer =spheres.create(copyOf(point), 90, '#ffff00', '#ffff00', alpha / 6);		
+		var center = spheres.create(copyOf(point), 10, '#ffffff', '#ffffff', alpha),
+			middle = spheres.create(copyOf(point), 14, '#ffff00', '#ffff00', alpha / 4),
+			outer =spheres.create(copyOf(point), 16, '#ffff00', '#ffff00', alpha / 6);		
 
 		return {
 			solids: [center, middle, outer],
@@ -64,33 +78,57 @@
 		);
 	}	
 				
-	function createLightboat(perspective, transformation) {
-		var drawing = app.createDrawingObject(perspective),
-			primitives = app.createPrimitivesObject(drawing),
-			solids = app.createSolidsObject(primitives),
-			spheres = app.createFakeSpheresObject(perspective),
-			hull = createHull(solids, boatWidth, boatHeight, boatLength),
+	function createLightboat(solids, spheres, transformation) {
+		var hull = createHull(solids, boatWidth, boatHeight, boatLength),
 			light = createLightSphere(
 				spheres, 
 				{x: 0, y: -150, z: 0},
 				0.8
 			),
-			points = hull.points.concat(light.points)
+			hullReflection = solids.createHexahedron(
+				getReflectionsX(hull.points),
+				'#880011',
+				'#cc0011',
+				.6
+			),
+			lightReflection = createLightSphere(
+				spheres, 
+				{x: 0, y: 150, z: 0},
+				.4
+			),
+			points = hull.points
+				.concat(light.points)
+				.concat(hullReflection.points)
+				.concat(lightReflection.points);
 
 		shiftRotateBoat(points, transformation);
-		return [hull].concat(light.solids);		
+		
+		return [hull, hullReflection]
+			.concat(light.solids)
+			.concat(lightReflection.solids);		
 	}
-				
-							
+											
 	function createLightboats(perspective, transformation) {
-		var lightBoats = [],
+		var drawing = app.createDrawingObject(perspective),
+			vectorDrawing = app.createVectorDrawingObject(perspective),
+			primitives = app.createPrimitivesObject(drawing, vectorDrawing),
+			solids = app.createSolidsObject(primitives),
+			spheres = app.createFakeSpheresObject(perspective),
+			lightBoats = [],
+			primitives = [],
 			i;
 			
 		for (i = numberOfBoats - 1; i >= 0; i -= 1) {
 			lightBoats = lightBoats.concat(
-				createLightboat(perspective, transformation)
+				createLightboat(solids, spheres, transformation)
 			);
 		}
+
+		lightBoats.forEach(function (solid) {
+			primitives = primitives.concat(solid.primitives)
+		});
+		vectorDrawing.setKeyListenerForPrintSvg(primitives);	
+			
 		return lightBoats;
 	};
 		
