@@ -2,7 +2,7 @@
 /* required diagrams, transformations */
 (function (app) {
 	// config
-	var numberOfShips = 100,
+	var numberOfShips = 1 ,//00,
 		areaWidth = 100,
 		halfAreaWidth  = areaWidth / 2,
 		shipSpacing = 300,
@@ -28,18 +28,20 @@
 	function createLightships(perspective) {
 		var drawing = app.createDrawingObject(perspective),
 			vectorDrawing = app.createVectorDrawingObject(perspective),
-			primitives = app.createPrimitivesObject(drawing, vectorDrawing),
-			solids = app.createSolidsObject(primitives),
+			primitivesObject = app.createPrimitivesObject(drawing, vectorDrawing),
+			solids = app.createSolidsObject(primitivesObject),
 			spheres = app.createFakeSpheresObject(perspective),
-			lightshipsObject = app.createLightshipsObject(solids, spheres),
+			lightshipsObject = app.createLightshipsObject(spheres),
 			lightship,
+			hull,
 			lightships = [],
 			primitives = [],
 			i;
 			
 		for (i = numberOfShips - 1; i >= 0; i -= 1) {
-			lightship = lightshipsObject.createSkiff();
-			shiftRotateShip(lightship.points);
+			hull = lightshipsObject.createCalshotSpitHull(primitivesObject);
+			lightship = lightshipsObject.create(hull);
+			//shiftRotateShip(lightship.points);
 			lightships.push(lightship);
 			primitives = primitives.concat(lightship.primitives)
 		}
