@@ -39,7 +39,7 @@
 			i;
 			
 		for (i = numberOfShips - 1; i >= 0; i -= 1) {
-			hull = lightshipsObject.createCalshotSpitHull(primitivesObject);
+			hull = lightshipsObject.createCalshotSpitHull(primitivesObject, perspective);
 			lightship = lightshipsObject.create(hull);
 			//shiftRotateShip(lightship.points);
 			lightships.push(lightship);

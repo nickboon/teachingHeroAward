@@ -65,93 +65,20 @@
 					getReflectionsX(hull.points), lineColour, fillColour, hullAlpha - .2
 				);
 				
-			if (!(solids)) {
-				throw 'You need to pass in a solids objects to create a basic hull.';
+			if (!solids) {
+				throw 'You need to pass in a solids object to create a basic hull.';
 			}
-	
-				
+					
 			return	{
 				points: hull.points.concat(hullReflection.points),
 				primitives: hull.primitives.concat(hullReflection.primitives)
 			};
 		}	
-			
-		function createCalshotSpitHull(primitives) {						
-			var halfWidth = width / 2,
-				halfLength = length / 2,
-				thirdWidth = width / 3,
-				thirdLength = length / 3,	
-				zOffset = -length * .4,
-				points = [
-					// deck
-					{x: -halfWidth, y: -deckHeight -5, z: -70 + zOffset}, // 0 start curve stern
-					{x: -halfWidth -thirdWidth * 2, y: -deckHeight, z: -10 + zOffset}, // 1 control 1
-					{x: -halfWidth -thirdWidth * 2, y: -deckHeight, z: 155 + zOffset}, // 2 control 2
-					{x: 0, y: -deckHeight - 10, z: 180 + zOffset}, // 3 end curve (bows);
 				
-					{x: halfWidth + thirdWidth * 2, y: -deckHeight, z: 155 + zOffset}, // 4 control 2
-					{x: halfWidth + thirdWidth * 2, y: -deckHeight, z: -10 + zOffset}, // 5 control 1
-					{x: halfWidth, y: -deckHeight - 5, z: -70 + zOffset}, // 6	start curve stern
-					
-					{x: -thirdWidth, y: -deckHeight - 7, z: -80 + zOffset}, // 7 bow control 1
-					{x: thirdWidth, y: -deckHeight - 7, z: -80 + zOffset}, // 8 bow control 2
-					
-					// footprint
-					{x: -halfWidth, y: 0, z: -70 + zOffset}, // 9 start curve stern
-					{x: -halfWidth -thirdWidth, y: 0, z: -10 + zOffset}, // 10 control 1
-					{x: -halfWidth -thirdWidth, y: 0, z: 155 + zOffset}, // 11 control 2
-					{x: 0, y: 0, z: 180 + zOffset  - 10}, // 12 end curve (bows);
-				
-					{x: halfWidth + thirdWidth, y: 0, z: 155 + zOffset}, // 13 control 2
-					{x: halfWidth + thirdWidth, y: 0, z: -10 + zOffset}, // 14 control 1
-					{x: halfWidth, y: 0, z: -70 + zOffset}, // 15	start curve stern
-					
-					{x: -thirdWidth, y: 0, z: -80 + zOffset}, // 16 bow control 1
-					{x: thirdWidth, y: 0, z: -80 + zOffset} // 17 bow control 2
-				];
-			
-			function getPrimitives() {				
-				return [
-					// deck
-					primitives.createCurve(
-						points[0], points[1], points[2], points[3],
-						lineColour, hullAlpha
-					),
-					primitives.createCurve(
-						points[6], points[5], points[4], points[3],
-						lineColour, hullAlpha
-					),
-					primitives.createCurve(
-						points[0], points[7], points[8], points[6],
-						lineColour, hullAlpha
-					),
-					// footprint
-					primitives.createCurve(
-						points[9], points[10], points[11], points[12],
-						lineColour, hullAlpha
-					),
-					primitives.createCurve(
-						points[15], points[14], points[13], points[12],
-						lineColour, hullAlpha
-					),
-					primitives.createCurve(
-						points[9], points[16], points[17], points[15],
-						lineColour, hullAlpha
-					),
-					primitives.createLine(
-						points[3], points[12], lineColour, hullAlpha
-					)
-					//,
-					//primitives.createFill(points, fillColour, hullAlpha)
-				];				
-			}
-			
-			return {
-				points: points,
-				primitives: getPrimitives()
-			};
-		}
-			
+		function createCalshotSpitHull(primitives, perspective) {
+			return app.createCalshotSpitHull(primitives, perspective, width, deckHeight, length, lineColour, fillColour, hullAlpha);
+		}		
+						
 		function create(hull) {				
 				light = createLightSphere({x: 0, y: -mastHeight, z: 0}, 0.8),
 				lightReflection = createLightSphere({x: 0, y: mastHeight, z: 0}, .4);
