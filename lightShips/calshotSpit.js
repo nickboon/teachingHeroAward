@@ -1,12 +1,18 @@
 (function (app) {
 	// create and return API for this module
-	app.createCalshotSpitHull = function (primitives, perspective, width, deckHeight, length, lineColour, fillColour, hullAlpha) {
+	app.createCalshotSpitHull = function (primitives, perspective) {
 		var line = primitives.createLine,
 			curve = primitives.createCurve,
 			fill = primitives.createFill,
 			screenX = perspective.getScreenX,
 			screenY = perspective.getScreenY,
 			getNearestZFromArray = app.createPointsObject().getNearestZFromArray,
+			lineColour = '#880011',
+			fillColour = '#cc0011',
+			hullAlpha = 0.8,
+			width = 30,
+			deckHeight = 20,
+			length =100;
 			halfWidth = width / 2,
 			deckhouseHeight = deckHeight * 1.5,
 			halfLength = length / 2,

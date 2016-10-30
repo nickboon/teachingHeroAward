@@ -2,7 +2,7 @@
 /* required diagrams, transformations */
 (function (app) {
 	// config
-	var numberOfShips = 1 ,//00,
+	var numberOfShips = 1,
 		areaWidth = 100,
 		halfAreaWidth  = areaWidth / 2,
 		shipSpacing = 300,
@@ -39,7 +39,9 @@
 			i;
 			
 		for (i = numberOfShips - 1; i >= 0; i -= 1) {
-			hull = lightshipsObject.createCalshotSpitHull(primitivesObject, perspective);
+			//hull = app.createCalshotSpitHull(primitivesObject, perspective);
+			hull = app.createCurvedHull(primitivesObject, perspective);
+			//hull = app.createBasicHull(solids);
 			lightship = lightshipsObject.create(hull);
 			//shiftRotateShip(lightship.points);
 			lightships.push(lightship);
