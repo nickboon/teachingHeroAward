@@ -40,7 +40,7 @@
 			
 		for (i = numberOfShips - 1; i >= 0; i -= 1) {
 			//hull = app.createCalshotSpitHull(primitivesObject, perspective);
-			hull = app.createCurvedHull(primitivesObject, perspective);
+			hull = app.createCurvedHullModel(primitivesObject, perspective);
 			//hull = app.createBasicHull(solids);
 			lightship = lightshipsObject.create(hull);
 			//shiftRotateShip(lightship.points);

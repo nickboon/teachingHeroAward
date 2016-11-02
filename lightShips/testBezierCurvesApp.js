@@ -119,8 +119,7 @@
 		}	
 		
 		function drawCurve(points, colour) {
-			var lastIndex = points.length - 1,
-				i = lastIndex;
+			var i = points.length - 1,
 	
 			context.save();
 			
