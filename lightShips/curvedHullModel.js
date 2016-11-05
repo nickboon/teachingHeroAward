@@ -12,7 +12,7 @@
 		halfLength = length / 2,
 		quarterLength = length / 4,
 		baseDiff = 5;
-		bezierSplitDepth = 0;
+		bezierSplitDepth = 3;
 		
 		// objects from dependancies
 		points = app.createPointsObject(),
