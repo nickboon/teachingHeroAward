@@ -1,73 +1,147 @@
 <html>
 	<body>
+	
+	<div>bow, bowFoot, cabinFront, mast, cabinBack, sternFoot, stern</div>
+	<div>0 6 48 93 120 157 173</div>	
+	<div>deck length = 172, width = 52</div>	
+	<div>cabin length = 72, width = 30, height = 14</div>	
+			
 	<canvas id="canvas"></canvas>
 	<script>
 		var context = document.getElementById('canvas').getContext('2d');
-		context.strokeStyle = '#00ff00';
-var draw = function(ctx) {
-ctx.save();
-ctx.fillStyle = "rgba(0, 0, 0, 0)";
-ctx.strokeStyle = "#000000";
-ctx.beginPath();
+			context.strokeStyle = '#00ff00',
+			curves = [
+				// elevation of hull
+				[	{x: 37, y: 69, c: '#00ff00'},
+					{x: 93, y: 67, c: '#00ff00'},
+					{x: 93, y: 67, c: '#ff0000'}],//0 bow top to middle
+				[	{x: 123, y: 65, c: '#00ff00'},
+					{x: 150, y: 62, c: '#00ff00'},
+					{x: 164, y: 61, c: '#ff0000'}],//1 midde to corner
+				[	{x: 170, y: 60, c: '#00ff00'},
+					{x: 173, y: 60, c: '#00ff00'},
+					{x: 173, y: 60, c: '#ff0000'}],//2 corner to stern top
+				[	{x: 167, y: 73, c: '#00ff00'},
+					{x: 157, y: 78, c: '#00ff00'},
+					{x: 157, y: 78, c: '#ff0000'}],//3 stern top to stern base
+				[	{x: 1, y: 71, c: '#00ff00'},
+					{x: 1, y: 57, c: '#00ff00'},
+					{x: 1, y: 57, c: '#ff0000'}],//4 bow base to bow top					
+				// plan of hull
+				// deck
+				[	{x: 19, y: 120, c: '#00ff00'},
+					{x: 93, y: 120, c: '#00ff00'},
+					{x: 93, y: 120, c: '#ff0000'}],//bow to middle
+				[	{x: 147, y: 120, c: '#00ff00'},
+					{x: 164, y: 130, c: '#00ff00'},
+					{x: 164, y: 130, c: '#ff0000'}],//middle to corner
+				[	{x: 172, y: 135, c: '#00ff00'},
+					{x: 173, y: 138, c: '#00ff00'},
+					{x: 173, y: 146, c: '#ff0000'}],//corner to stern
+				//base
+				[	{x: 15, y: 120, c: '#00ff00'},
+					{x: 93, y: 120, c: '#00ff00'},
+					{x: 93, y: 120, c: '#ff0000'}],//bow to middle
+				[	{x: 135, y: 120, c: '#00ff00'},
+					{x: 150, y: 130, c: '#00ff00'},
+					{x: 150, y: 130, c: '#ff0000'}],//middle to corner
+				[	{x: 156, y: 135, c: '#00ff00'},
+					{x: 158, y: 138, c: '#00ff00'},
+					{x: 158, y: 146, c: '#ff0000'}]//corner to stern
+			];
+		
+	function markPoints(points) {
+		var halfwidth = 5;
+		
+		points.forEach(function (point) {
+			context.save();
+			context.beginPath();
+			context.strokeStyle = point.c;
+			context.moveTo(point.x - halfwidth, point.y); 
+			context.lineTo(point.x + halfwidth, point.y);
+			context.moveTo(point.x, point.y - halfwidth); 
+			context.lineTo(point.x, point.y + halfwidth);
+			context.stroke();
+			context.restore();	
+		});
+	}	
+				
+	function drawPoints() {
+		curves.forEach(function (curve) {
+			markPoints(curve, '#ff0000');
+		});	
+	}	
+		
+	function draw(ctx) {
+		ctx.save();
+		ctx.fillStyle = "rgba(0, 0, 0, 0)";
+		ctx.strokeStyle = "#000000";
+		ctx.beginPath();
+		// center x = 93
 
-// elevation of hull
-ctx.moveTo(1,57);
-ctx.bezierCurveTo(37,69,92,67,92,67); //bow top to middle
-ctx.bezierCurveTo(136,65,174,60,174,60); //middle to stern top
-ctx.bezierCurveTo(167.317,72.80799999999999,157.417,77.908,157.417,77.908);//stern top to stern base
-ctx.lineTo(6.366,81.559); // stern base to bow base
-ctx.bezierCurveTo(0.201,70.707,0.502,56.906,0.502,56.906);//bow base to bow top
+		// elevation of hull
+		ctx.moveTo(1,57);
+		ctx.bezierCurveTo(37,69,93,67,93,67); //bow top to middle
+		ctx.bezierCurveTo(123,65,150,62,164,61);//middle to corner
+		ctx.bezierCurveTo(170,60,174,60,174,60);//corner to stern top
+		ctx.bezierCurveTo(167,73,157,78,157,78);//stern top to stern base
+		ctx.lineTo(6,82); //stern base to bow base
+		ctx.bezierCurveTo(1,71,1,57,1,57);//bow base to bow top
 
-// elevation cabin
-ctx.moveTo(47.607,69.839); // bow base
-ctx.lineTo(47.437,57.248); // bow base to bow top
-ctx.lineTo(119.614,57.039); // bow top to stern top
-ctx.lineTo(119.614,70.906); //stern top to stern base
-ctx.lineTo(47.607,69.839); // stern base to bow base
+		//hull plan right
+		//deck
+		ctx.moveTo(1,146);
+		ctx.bezierCurveTo(19,120,93,120,93,120); //bow to middle
+		ctx.bezierCurveTo(147,120,164,130,164,130); //middle to corner
+		ctx.bezierCurveTo(172,135,173,138,173,146); //corner to stern
+		// base
+		ctx.moveTo(6,146);
+		ctx.bezierCurveTo(15,120,93,120,93,120); //bow to middle
 
-// mast
-ctx.moveTo(90.211,31.103); // bow top
-ctx.lineTo(95.912,31.103); // bow top top stern top
-ctx.lineTo(95.612,55.405); // stern top to stern base
-ctx.lineTo(90.511,55.706); // stern base top bow base
-ctx.lineTo(90.211,31.103); // bow base to bow top
 
-// light
-ctx.moveTo(85.711,27.502);
-ctx.lineTo(100.413,27.502);
-ctx.lineTo(101.613,0.5);
-ctx.lineTo(84.811,0.5);
-ctx.lineTo(85.711,27.502);
 
-ctx.moveTo(0.634,145.311);
-ctx.bezierCurveTo(19.493000000000002,120.25,97.112,119.912,97.112,119.912);
-ctx.bezierCurveTo(146.918,120.21300000000001,164.019,130.113,164.019,130.113);
+		ctx.bezierCurveTo(135,120,150,130,150,130); //middle to corner
+		ctx.bezierCurveTo(156,135,158,138,158,146); //corner to stern
+		//ribs
+		ctx.lineTo(173,146); //stern
+		ctx.moveTo(164,130);
+		ctx.lineTo(150,130); //corner
+		ctx.moveTo(1,146);
+		ctx.lineTo(6,146); //bow
+		
+		// mast
+		ctx.moveTo(90,31); // bow top
+		ctx.lineTo(96,31); // bow top top stern top
+		ctx.lineTo(96,57); // stern top to stern base
+		ctx.lineTo(90,57); // stern base top bow base
+		ctx.lineTo(90,31); // bow base to bow top
 
-ctx.moveTo(164.019,130.113);
-ctx.bezierCurveTo(171.82,134.614,173.32,137.614,173.448,145.551);
+		// light
+		ctx.moveTo(86,28);
+		ctx.lineTo(101,28);
+		ctx.lineTo(101,1);
+		ctx.lineTo(86,1);
+		ctx.lineTo(86,28);
 
-ctx.moveTo(0.623,145.753);
-ctx.bezierCurveTo(19.482000000000003,170.813,97.101,171.15099999999998,97.101,171.15099999999998);
-ctx.bezierCurveTo(146.90699999999998,170.85099999999997,164.00799999999998,160.95,164.00799999999998,160.95);
+		// elevation cabin
+		ctx.moveTo(48,71); // bow base
+		ctx.lineTo(48,57); // bow base to bow top
+		ctx.lineTo(120,57); // bow top to stern top
+		ctx.lineTo(120,71); //stern top to stern base
+		ctx.lineTo(48,71); // stern base to bow base
 
-ctx.moveTo(164.007,160.951);
-ctx.bezierCurveTo(171.808,156.451,173.308,153.451,173.437,145.513);
+		// cabin plan
+		ctx.moveTo(48,146);
+		ctx.lineTo(48,131);
+		ctx.lineTo(120,131);
+		ctx.lineTo(120,146);
 
-ctx.moveTo(47.937,130.81);
-ctx.lineTo(120.437,130.81);
-ctx.quadraticCurveTo(120.437,130.81,120.437,130.81);
-ctx.lineTo(120.437,162.06);
-ctx.quadraticCurveTo(120.437,162.06,120.437,162.06);
-ctx.lineTo(47.937,162.06);
-ctx.quadraticCurveTo(47.937,162.06,47.937,162.06);
-ctx.lineTo(47.937,130.81);
-ctx.quadraticCurveTo(47.937,130.81,47.937,130.81);
+		ctx.stroke();
+		ctx.restore();
+	};
 
-ctx.stroke();
-ctx.restore();
-};
-
-draw(context);
+	draw(context);
+	drawPoints();
 	</script>
 	</body>
 </html>
