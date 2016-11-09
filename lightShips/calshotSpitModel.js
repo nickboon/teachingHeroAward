@@ -3,16 +3,7 @@
 	var lineColour = '#880011',
 		fillColour = '#cc0011',
 		alpha = 0.8,
-		width = 45,
-		deckHeight = 15,
-		cabinHeight = 12,
-		length =150,
-		halfWidth = width / 2,
-		thirdWidth = width / 3,
-		halfLength = length / 2,
-		quarterLength = length / 4,
-		baseDiff = 5,
-		bezierSplitDepth = 3,
+
 		
 		// objects from dependancies
 		points = app.createPointsObject(),
@@ -24,25 +15,31 @@
 				// bow to stern
 				
 				// deck
-				{x: 0, y: -deckHeight - 5, z: halfLength},	// 0 bow desk
-				{x: 0, y: -deckHeight - 3, z: -halfLength},	// 1 stern deck
+				{x: 0, y: -25, z: -92},	// 0 bow deck
+				{x: 0, y: -22, z: 81},	// 1 stern deck
 
 				// base
-				{x: 0, y: 0, z: halfLength - baseDiff},		// 2 bow base
-				{x: 0, y: 0, z: -halfLength + baseDiff}	// 3 stern base
+				{x: 0, y: 0: -87},		// 2 bow base
+				{x: 0, y: 0: 64}	// 3 stern base
 			],
 			
 			left = [			
 				// bow to stern
 				
 				// deck
-				{x: -halfWidth, y: -deckHeight, z: quarterLength},						
-				{x: -halfWidth, y: -deckHeight, z: 0},								
-				{x: -halfWidth, y: -deckHeight, z: -quarterLength},					
+				//first control						
+				{x: -26, y: -13, z: -56},
+				//middle								
+				{x: -26, y: -15, z: 0}, 
+				// corner
+				{x: -16, y: -21, z: 71},					
 
 				// base
+				//first control						
 				{x: -halfWidth + baseDiff, y: 0, z: (halfLength - baseDiff) / 2},	
-				{x: -halfWidth + baseDiff, y: 0, z: 0},				 					
+				//middle								
+				{x: -halfWidth + baseDiff, y: 0, z: 0},
+				// corner
 				{x: -halfWidth + baseDiff, y: 0, z: (-halfLength + baseDiff) / 2},	
 
 				// cabin
