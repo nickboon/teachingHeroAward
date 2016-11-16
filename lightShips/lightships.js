@@ -1,6 +1,6 @@
 /* requires perspective, solids, fakesphere*/
 (function (app) {
-	var mastHeight = 150;
+	var mastHeight = 100; //150
 
 	function getReflectionX(point) {
 		return {x: point.x, y: -point.y, z: point.z};
