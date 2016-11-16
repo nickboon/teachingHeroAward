@@ -4,4 +4,3 @@ We invite you to submit a design proposal for the award piece‚ which will be p
 Teaching Hero Award Student Submission Form
 The deadline for submission is Friday the 25th of July
 
-If you have any queries about the submission form please email sarah.otoole@teachingandlearning.ie
